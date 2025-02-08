@@ -1,0 +1,60 @@
+<div class="layout-wrapper page-enter-active" [class.scrolled]="isScrolled">
+  <!-- Add overlay for mobile menu -->
+  <div class="mobile-overlay" 
+       [class.active]="isMobileMenuOpen"
+       (click)="closeMobileMenu()">
+  </div>
+
+  <nav class="main-nav navbar" 
+       [class.scrolled]="isScrolled"
+       [class.hidden]="isNavbarHidden"
+       [class.mobile-open]="isMobileMenuOpen">
+    <div class="nav-container">
+      <!-- Logo et Marque -->
+      <a routerLink="/" class="brand-section" (click)="closeMobileMenu()">
+        <div class="logo-container">
+          <img src="assets/images/eco-icon.png" alt="EcoPlages.tn" class="nav-logo">
+          <div class="logo-wave"></div>
+        </div>
+      </a>
+
+      <!-- Menu principal -->
+      <div class="nav-links" [class.mobile-open]="isMobileMenuOpen">
+        <a *ngFor="let link of navLinks; let i = index" 
+           [routerLink]="isLinkDisabled(link) ? null : link.path" 
+           routerLinkActive="active" 
+           [routerLinkActiveOptions]="{exact: link.exact}"
+           class="nav-link" 
+           [class.disabled]="isLinkDisabled(link)"
+           [style.--i]="i"
+           (click)="isLinkDisabled(link) ? $event.preventDefault() : closeMobileMenu()"
+           (mouseenter)="hover = link.id">
+          <i [class]="link.icon"></i>
+          <span>{{ currentLang === 'fr' ? link.labelFr : link.labelAr }}</span>
+          <div class="link-wave"></div>
+          <span class="new-badge" *ngIf="link.isNew">Nouveau</span>
+          <span class="coming-soon" *ngIf="link.disabled">Bientôt disponible</span>
+        </a>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions">
+        <button class="lang-toggle" (click)="toggleLanguage()">
+          {{ currentLang === 'fr' ? 'عربي' : 'FR' }}
+        </button>
+        <button class="mobile-toggle" 
+                (click)="toggleMobileMenu()"
+                aria-label="Toggle menu">
+          <i class="fas" 
+             [class.fa-bars]="!isMobileMenuOpen" 
+             [class.fa-times]="isMobileMenuOpen">
+          </i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content" [class.menu-open]="isMobileMenuOpen">
+    <router-outlet></router-outlet>
+  </main>
+</div> 

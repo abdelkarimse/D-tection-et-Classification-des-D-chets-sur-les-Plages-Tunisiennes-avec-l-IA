@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "imageAnalysis": "Analyse Image",
+    "videoAnalysis": "Analyse Vidéo",
+    "liveAnalysis": "Analyse en Direct",
+    "statistics": "Statistiques",
+    "coming_soon": "Bientôt disponible",
+    "new": "Nouveau"
+  },
+  "hero": {
+    "title": "Détection Intelligente des Déchets",
+    "subtitle": "Protection des Plages Tunisiennes par l'IA",
+    "ai_powered": "Propulsé par l'IA",
+    "start_detection": "Démarrer la Détection",
+    "learn_more": "En Savoir Plus",
+    "scroll_down": "Découvrir Plus"
+  },
+  "features": {
+    "image": {
+      "title": "Analyse d'Images",
+      "description": "Détectez et classifiez automatiquement les déchets à partir de photos de plages",
+      "button": "Commencer l'analyse"
+    },
+    "video": {
+      "title": "Analyse Vidéo",
+      "description": "Surveillez et analysez les déchets en temps réel via des séquences vidéo",
+      "button": "Lancer l'analyse vidéo"
+    },
+    "live": {
+      "title": "Analyse en Direct",
+      "description": "Détection instantanée des déchets via votre webcam ou caméra",
+      "button": "Démarrer le direct"
+    }
+  },
+  "ocean": {
+    "title": "Les Trésors Côtiers de la Tunisie",
+    "description": "La Tunisie, avec ses 1300 kilomètres de côtes méditerranéennes, abrite certaines des plages les plus pittoresques du monde. De Tabarka à Zarzis, notre littoral offre une diversité exceptionnelle d'écosystèmes marins et de paysages côtiers uniques. Cette richesse naturelle est non seulement un atout touristique majeur, mais aussi un patrimoine environnemental précieux qu'il est essentiel de préserver pour les générations futures.",
+    "stats": {
+      "coast": "km de côtes",
+      "beaches": "plages",
+      "species": "espèces marines",
+      "coast.description": "De magnifiques côtes méditerranéennes à préserver",
+      "beaches.description": "Des plages de sable fin accessibles toute l'année",
+      "species.description": "Une biodiversité marine exceptionnelle"
+    },
+    "image": {
+      "caption": "Vue aérienne de notre magnifique littoral"
+    }
+  },
+  "environment": {
+    "title": "Alerte : Crise Environnementale du Golfe de Gabès",
+    "subtitle": "Une situation critique nécessitant une action immédiate",
+    "description": "Le golfe de Gabès traverse une crise environnementale sans précédent. Les déchets chimiques industriels menacent gravement l'écosystème marin.",
+    "learn_more": "En savoir plus",
+    "take_action": "Agir maintenant",
+    "impacts": {
+      "marine": {
+        "title": "Impact sur la Vie Marine",
+        "description": "Plus de 57% des espèces marines locales sont menacées d'extinction"
+      },
+      "biodiversity": {
+        "title": "Perte de Biodiversité",
+        "description": "Plus de 40 espèces marines ont déjà disparu de nos côtes"
+      },
+      "pollution": {
+        "title": "Pollution Industrielle",
+        "description": "85% des eaux côtières sont affectées par la pollution industrielle"
+      }
+    },
+    "cta": {
+      "title": "Rejoignez notre initiative de protection",
+      "description": "Ensemble, nous pouvons faire la différence pour préserver notre patrimoine marin",
+      "join": "Rejoindre l'initiative",
+      "download": "Télécharger le rapport"
+    }
+  },
+  "tourism": {
+    "title": "Impact sur le Tourisme et l'Économie Locale",
+    "description": "Évolution des Visiteurs et Revenus",
+    "stats": {
+      "visitors": "Visiteurs",
+      "revenue": "Revenus",
+      "growth": "Croissance"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Opération réussie",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "close": "Fermer"
+  }
+}

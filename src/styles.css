@@ -1,0 +1,204 @@
+:root {
+    /* Primary Color with Gradients */
+    --primary-100: #E0F7FA;  /* Lightest */
+    --primary-200: #B2EBF2;
+    --primary-300: #80DEEA;
+    --primary-400: #4DD0E1;
+    --primary-500: #26C6DA;  /* Base */
+    --primary-600: #00ACC1;
+    --primary-700: #0097A7;
+    --primary-800: #00838F;
+    --primary-900: #006064;  /* Darkest */
+
+    /* Secondary Color with Gradients */
+    --secondary-100: #FFF3E0;  /* Lightest */
+    --secondary-200: #FFE0B2;
+    --secondary-300: #FFCC80;
+    --secondary-400: #FFB74D;
+    --secondary-500: #FFA726;  /* Base */
+    --secondary-600: #FB8C00;
+    --secondary-700: #F57C00;
+    --secondary-800: #EF6C00;
+    --secondary-900: #E65100;  /* Darkest */
+
+    /* Accent Color with Gradients */
+    --accent-100: #E8F5E9;  /* Lightest */
+    --accent-200: #C8E6C9;
+    --accent-300: #A5D6A7;
+    --accent-400: #81C784;
+    --accent-500: #66BB6A;  /* Base */
+    --accent-600: #4CAF50;
+    --accent-700: #388E3C;
+    --accent-800: #2E7D32;
+    --accent-900: #1B5E20;  /* Darkest */
+
+    /* Supporting Colors */
+    --danger: #FF5252;
+    --info: #29B6F6;
+    --warning: #FFD740;
+    --text: #263238;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --border: #B0BEC5;
+
+    --sand-beige: #f5e6ca;
+    --sky-blue: #e8f1f5;
+
+    /* Couleurs spécifiques au thème plages */
+    --ocean-blue: #006d77;
+    --sand-light: #f5e6ca;
+    --coral: #e29578;
+    --seafoam: #83c5be;
+    --wave: #edf6f9;
+
+    /* Palette inspirée des plages tunisiennes */
+    --mediterranean-blue: #1a5f7a;
+    --sand-gold: #deb887;
+    --coral-accent: #ff7f50;
+    --seafoam-light: #98ddca;
+    --deep-sea: #003049;
+    --white-foam: #f5f5f5;
+    --sunset-orange: #ff6b6b;
+    --ceramic-blue: #2a9d8f;
+    
+    /* Gradients */
+    --water-gradient: linear-gradient(45deg, var(--mediterranean-blue), var(--ceramic-blue));
+    --sand-gradient: linear-gradient(to right, var(--sand-gold), #f5e6d3);
+    --sunset-gradient: linear-gradient(45deg, var(--sunset-orange), var(--coral-accent));
+    
+    /* Shadows */
+    --soft-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    
+    /* Transitions */
+    --smooth-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-500: #006064;
+        --secondary-500: #F57C00;
+        --accent-500: #388E3C;
+        --text: #ECEFF1;
+        --bg: #1A237E;
+        --surface: #263238;
+        --border: #455A64;
+    }
+}
+
+.dark-theme {
+    --primary-500: #006064;
+    --secondary-500: #F57C00;
+    --accent-500: #388E3C;
+    --text: #ECEFF1;
+    --bg: #1A237E;
+    --surface: #263238;
+    --border: #455A64;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary-500);
+    border-color: var(--primary-600);
+    color: white;
+    &:hover {
+        background-color: var(--primary-600);
+    }
+}
+
+.text-muted {
+    color: color-mix(in srgb, var(--text), transparent 40%) !important;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.bg-primary {
+    background-color: #006d77 !important;
+}
+
+.navbar {
+    padding: 1rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Styles globaux pour les transitions fluides */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+/* Style pour le scrollbar personnalisé */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--wave);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--seafoam);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--ocean-blue);
+}
+
+/* Styles pour les animations de page */
+.page-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+/* Animations globales */
+@keyframes waveFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes cleanTransition {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

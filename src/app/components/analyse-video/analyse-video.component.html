@@ -1,0 +1,154 @@
+<!-- Video Analysis Interface -->
+<div class="video-analyzer">
+  <!-- Animated Background -->
+  <div class="waves">
+    <div class="wave-layer" *ngFor="let i of [1,2,3]"></div>
+  </div>
+
+  <div class="analyzer-container" [@fadeInOut]>
+    <!-- Header Section -->
+    <div class="analyzer-header">
+      <h2>
+        <i class="fas fa-video"></i>
+        Ocean Video Analysis
+      </h2>
+      <p class="subtitle">Upload and analyze videos to detect ocean debris</p>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section" 
+         #dropZone
+         [class.dragging]="isDragging"
+         (dragover)="onDragOver($event)"
+         (dragleave)="onDragLeave($event)"
+         (drop)="onDrop($event)">
+      
+      <!-- Upload Area -->
+      <div class="upload-area" *ngIf="!videoUrl" [@fadeInOut]>
+        <div class="upload-icon">
+          <i class="fas fa-cloud-upload-alt"></i>
+        </div>
+        <h3>Drag & Drop Video Here</h3>
+        <p>or</p>
+        <button class="upload-btn" (click)="triggerFileInput()">
+          <i class="fas fa-folder-open"></i>
+          Choose Video
+        </button>
+        <input #fileInput
+               type="file"
+               accept="video/*"
+               (change)="onFileSelected($event)"
+               style="display: none;">
+        <p class="upload-hint">Supported formats: MP4, WebM, MOV</p>
+      </div>
+
+      <!-- Video Preview -->
+      <div class="preview-area" *ngIf="videoUrl" [@fadeInOut]>
+        <!-- Video Player -->
+        <div class="video-player-container">
+          <video #videoPlayer
+                 [src]="videoUrl"
+                 class="video-player"
+                 (timeupdate)="onTimeUpdate()"
+                 (click)="togglePlay()"
+                 [@pulseAnimation]="animationState">
+          </video>
+
+          <!-- Video Controls -->
+          <div class="video-controls">
+            <button class="control-btn" (click)="togglePlay()">
+              <i class="fas" [class.fa-play]="!isPlaying" [class.fa-pause]="isPlaying"></i>
+            </button>
+            
+            <div class="progress-container">
+              <input type="range"
+                     class="video-progress"
+                     [min]="0"
+                     [max]="duration"
+                     [value]="currentTime"
+                     (input)="seekVideo($event)">
+              <div class="time-display">
+                <span>{{formatTime(currentTime)}}</span>
+                <span>/</span>
+                <span>{{formatTime(duration)}}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detection Overlay -->
+          <div class="detection-overlay" *ngIf="detectedObjects.length > 0">
+            <div class="detection-box" *ngFor="let object of detectedObjects">
+              <div class="box-label">{{object.type}} ({{(object.confidence * 100).toFixed(0)}}%)</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Upload Progress -->
+        <div class="upload-progress" *ngIf="uploadProgress < 100">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+          </div>
+          <span class="progress-text">Uploading... {{uploadProgress}}%</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="preview-actions">
+          <button class="action-btn delete" (click)="reset()">
+            <i class="fas fa-trash"></i>
+            Remove
+          </button>
+          <button class="action-btn analyze" 
+                  (click)="analyseVideo()"
+                  [disabled]="isLoading">
+            <i class="fas" [class.fa-search]="!isLoading" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"></i>
+            {{isLoading ? 'Analyzing...' : 'Analyze Video'}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analysis Results -->
+    <div class="analysis-results" *ngIf="analysisResult" [@fadeInOut]>
+      <div class="result-header">
+        <i class="fas fa-chart-bar"></i>
+        Analysis Results
+      </div>
+      <div class="result-content">
+        <p>{{analysisResult}}</p>
+        
+        <!-- Detection Timeline -->
+        <div class="detection-timeline">
+          <div class="timeline-marker" 
+               *ngFor="let object of detectedObjects"
+               [style.left.%]="(object.timestamp / duration) * 100">
+            <div class="marker-tooltip">
+              {{object.type}} detected at {{formatTime(object.timestamp)}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Detection List -->
+        <div class="detection-list">
+          <div class="detection-item" *ngFor="let object of detectedObjects">
+            <i class="fas fa-exclamation-circle"></i>
+            <div class="detection-info">
+              <span class="detection-type">{{object.type}}</span>
+              <span class="detection-confidence">{{(object.confidence * 100).toFixed(0)}}% confidence</span>
+              <span class="detection-time">at {{formatTime(object.timestamp)}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Animation -->
+    <div class="loading-animation" *ngIf="isLoading" [@fadeInOut]>
+      <div class="ocean-loader">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+      </div>
+      <p class="loading-text">Analyzing video footage...</p>
+    </div>
+  </div>
+</div>

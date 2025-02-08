@@ -1,0 +1,247 @@
+<!-- Hero Section -->
+<section class="hero-section page-enter-active" aria-label="Hero Section">
+  <!-- Video Background with Cover -->
+  <div class="video-container">
+    <video id="videoPlayer"
+      class="video-background"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true">
+      <source src="assets/video/back-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="video-cover">
+      <div class="cover-content">
+        <h1 class="cover-title">Discover the Ocean</h1>
+        <p class="cover-text">Explore its beauty and learn how to protect it</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Overlay and Content -->
+  <div class="overlay" aria-hidden="true"></div>
+  <div class="hero-content" [@fadeInScale]>
+    <div class="ai-badge" role="status">
+      <i class="fas fa-robot" aria-hidden="true"></i>
+      <span>{{ translationService.translate('hero.ai_powered') }}</span>
+    </div>
+    <h1 class="hero-title" [@slideInUp]>{{ translationService.translate('hero.title') }}</h1>
+    <h2 class="hero-subtitle" [@slideInUp]="{ value: '', params: { delay: '200ms' }}">
+      {{ translationService.translate('hero.subtitle') }}
+    </h2>
+    <div class="cta-group" [@slideInUp]="{ value: '', params: { delay: '400ms' }}">
+      <button class="hero-cta primary-cta" (click)="startDetection()">
+        <i class="fas fa-play" aria-hidden="true"></i>
+        <span>{{ translationService.translate('hero.start_detection') }}</span>
+      </button>
+      <button class="hero-cta secondary-cta" (click)="learnMore()">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <span>{{ translationService.translate('hero.learn_more') }}</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator" (click)="scrollToFeatures()" role="button" tabindex="0"
+       [@fadeIn]="{ value: '', params: { delay: '800ms' }}">
+    <i class="fas fa-chevron-down" aria-hidden="true"></i>
+    <span class="sr-only">{{ translationService.translate('hero.scroll_down') }}</span>
+  </div>
+</section>
+
+<!-- Ocean Info Section -->
+<section class="ocean-info-section" #oceanSection>
+  <!-- Animated Background Particles -->
+  <div class="particles-container">
+    <div class="particle" *ngFor="let i of [1,2,3,4,5]"></div>
+  </div>
+
+  <div class="container">
+    <div class="ocean-content" [@fadeInOnScroll]>
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-water" aria-hidden="true"></i>
+          {{ translationService.translate('ocean.title') }}
+          <div class="title-underline"></div>
+        </h2>
+        <p class="section-description">
+          {{ translationService.translate('ocean.description') }}
+        </p>
+      </div>
+      
+      <!-- Interactive Statistics Cards -->
+      <div class="ocean-stats" [@staggerFadeIn]="isInView">
+        <div class="stat-item" *ngFor="let stat of oceanStats; let i = index"
+             [@fadeInOnScroll]="{ value: '', params: { delay: i * 200 + 'ms' }}"
+             [class.skeleton-loading]="!stat.loaded"
+             (mouseenter)="triggerRipple(); activateCard(i)"
+             [class.active]="activeCardIndex === i">
+          <div class="stat-content">
+            <div class="stat-icon-wrapper">
+              <i [class]="stat.icon" aria-hidden="true"></i>
+              <div class="icon-ring"></div>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" [@countUp]="stat.value">{{formatNumber(+stat.value)}}</span>
+              <span class="stat-label">{{ translationService.translate(stat.label) }}</span>
+              <p class="stat-description">
+                {{ translationService.translate(stat.description) }}
+              </p>
+            </div>
+          </div>
+          <div class="stat-progress">
+            <div class="progress-bar" [style.width.%]="getProgressWidth(stat.value)"></div>
+          </div>
+          <div class="card-glow"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Ocean Image Section -->
+    <div class="ocean-image-wrapper" [@fadeInScale]>
+      <div class="ocean-image" (mouseenter)="startImageAnimation()" (mouseleave)="stopImageAnimation()">
+        <div class="image-container" [class.animate]="isImageAnimating">
+          <img src="assets/images/img.jpg" 
+               alt="Coastal view" 
+               class="floating-image"
+               loading="lazy"
+               (load)="onImageLoad()">
+          <div class="detection-overlay" [class.active]="isImageHovered">
+            <div class="detection-boxes">
+              <div class="detection-box" 
+                   *ngFor="let box of detectionBoxes"
+                   [style.left.%]="box.x"
+                   [style.top.%]="box.y"
+                   [style.width.%]="box.width"
+                   [style.height.%]="box.height"
+                   [class.plastic]="box.type === 'plastic'"
+                   [@boxAnimation]>
+                <div class="box-content">
+                  <span class="detection-label">
+                    {{ box.label }}
+                    <span class="confidence">{{ ((box.confidence ?? 0) * 100).toFixed(0) }}%</span>
+                  </span>
+                  <div class="box-highlight"></div>
+                  <div class="detection-icon">
+                    <img *ngIf="box.label.includes('Bouteille')" src="./assets/images/bottle.png" alt="Bouteille d'eau" class="bottle-icon">
+                    <i *ngIf="!box.label.includes('Bouteille')" class="fas fa-trash"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="image-caption" [@fadeIn]>
+        <i class="fas fa-info-circle pulse" aria-hidden="true"></i>
+        {{ translationService.translate('ocean.image.caption') }}
+      </div>
+    </div>
+  </div>
+  
+  <!-- Enhanced Wave Decoration -->
+  <div class="wave-decoration" aria-hidden="true">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+  </div>
+</section>
+
+<!-- Environmental Alert Section -->
+<section class="environmental-alert" [@ripple]="rippleState">
+  <!-- Alert Background Effects -->
+  <div class="alert-background">
+    <div class="alert-particles"></div>
+    <div class="alert-glow"></div>
+  </div>
+
+  <div class="container">
+    <div class="alert-content" [@fadeInOnScroll]>
+      <div class="alert-header">
+        <div class="alert-icon-wrapper">
+          <i class="fas fa-exclamation-triangle pulse-warning"></i>
+          <div class="alert-ring"></div>
+        </div>
+        <h2 class="section-title warning">
+          {{ translationService.translate('environment.title') }}
+          <div class="warning-underline"></div>
+        </h2>
+        <p class="alert-subtitle">
+          {{ translationService.translate('environment.subtitle') }}
+        </p>
+      </div>
+      
+      <!-- Enhanced Alert Statistics -->
+      <div class="impact-stats" #statsSection [@staggerFadeIn]="isInView">
+        <div class="impact-item" *ngFor="let impact of environmentalImpacts; let i = index"
+             [@fadeInOnScroll]="{ value: '', params: { delay: i * 200 + 'ms' }}"
+             [class.in-view]="isInView"
+             [class.skeleton-loading]="!impact.loaded"
+             (mouseenter)="activateImpactCard(i)"
+             [class.active]="activeImpactIndex === i">
+          <div class="impact-header">
+            <div class="impact-icon-wrapper">
+              <i [class]="impact.icon"></i>
+              <div class="impact-ripple"></div>
+            </div>
+            <h3 class="impact-title">
+              {{ translationService.translate(impact.label + '.title') }}
+            </h3>
+          </div>
+
+          <div class="impact-content">
+            <div class="impact-value-wrapper" [class.positive]="impact.trend > 0">
+              <div class="value-container">
+                <span class="impact-value" [@countUp]>{{ impact.value }}</span>
+                <div class="trend-indicator">
+                  <i [class]="getTrendIcon(impact.trend)"></i>
+                  <span class="trend-value">{{ impact.trend }}%</span>
+                </div>
+              </div>
+              <div class="trend-graph">
+                <div class="trend-bar" 
+                     [style.height.%]="getTrendHeight(impact.trend)"
+                     [class.positive]="impact.trend > 0"></div>
+              </div>
+            </div>
+
+            <div class="impact-details">
+              <p class="impact-description">
+                {{ translationService.translate(impact.label + '.description') }}
+              </p>
+              <div class="impact-progress">
+                <div class="progress-track">
+                  <div class="progress-fill" 
+                       [style.width.%]="getImpactProgress(impact)"
+                       [class.critical]="isImpactCritical(impact)"></div>
+                </div>
+                <span class="progress-label">{{ getImpactStatus(impact) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="impact-actions">
+            <button class="action-button" (click)="learnMoreAboutImpact(impact)">
+              <i class="fas fa-info-circle"></i>
+              {{ translationService.translate('environment.learn_more') }}
+            </button>
+            <button class="action-button primary" (click)="takeAction(impact)">
+              <i class="fas fa-hand-holding-heart"></i>
+              {{ translationService.translate('environment.take_action') }}
+            </button>
+          </div>
+
+          <!-- Interactive Background Effect -->
+          <div class="impact-background" [class.active]="activeImpactIndex === i">
+            <div class="background-wave"></div>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+</section>
